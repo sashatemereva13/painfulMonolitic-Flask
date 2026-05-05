@@ -18,11 +18,12 @@ def init_db():
     cursor.executescript("""
         CREATE TABLE IF NOT EXISTS users (
             id            INTEGER PRIMARY KEY AUTOINCREMENT,
-            username      TEXT NOT NULL UNIQUE,
+            display_name      TEXT NOT NULL UNIQUE,
             email         TEXT NOT NULL UNIQUE,
             password_hash TEXT NOT NULL,
             bio           TEXT,
-            created_at    TEXT NOT NULL
+            created_at    TEXT NOT NULL,
+            opt_out_tracking INTEGER DEFAULT 1
         );
 
         CREATE TABLE IF NOT EXISTS games (

@@ -24,7 +24,7 @@ def seed():
         ("pixel_queen", "pixel@gamehub.io",   FAKE_HASH, "Completionist. 100% or nothing.",   ts(5)),
     ]
     c.executemany(
-        "INSERT INTO users (username, email, password_hash, bio, created_at) VALUES (?,?,?,?,?)",
+        "INSERT INTO users (display_name, email, password_hash, bio, created_at) VALUES (?,?,?,?,?)",
         users
     )
 
@@ -38,7 +38,7 @@ def seed():
         ("Stardew Valley",             "Simulation",   "Build your farm. Build your life.",             ts(1)),
         ("Dead Cells",                 "Roguelite",    "Die. Adapt. Grow stronger.",                    ts(1)),
         ("Ori and the Blind Forest",   "Platformer",   "A breathtaking forest journey.",                ts(1)),
-        ("Disco Elysium",              "RPG",          "A detective RPG unlike any other.",             ts(1)),
+        ("Disco Elysium: The Final Cut",      "RPG",          "A detective RPG unlike any other.",             ts(1)),
         ("Outer Wilds",                "Adventure",    "Explore a solar system stuck in a time loop.",  ts(1)),
     ]
     c.executemany(
@@ -49,7 +49,7 @@ def seed():
     conn.commit()
 
     # Fetch IDs now that rows are inserted
-    users_db = {row["username"]: row["id"] for row in c.execute("SELECT id, username FROM users")}
+    users_db = {row["display_name"]: row["id"] for row in c.execute("SELECT id, display_name FROM users")}
     games_db = {row["title"]: row["id"] for row in c.execute("SELECT id, title FROM games")}
 
     nova        = users_db["nova"]
@@ -64,7 +64,7 @@ def seed():
     sdv   = games_db["Stardew Valley"]
     dc    = games_db["Dead Cells"]
     ori   = games_db["Ori and the Blind Forest"]
-    disco = games_db["Disco Elysium"]
+    disco = games_db["Disco Elysium: The Final Cut"]
     ow    = games_db["Outer Wilds"]
 
     # -------------------------------------------------------------------------
