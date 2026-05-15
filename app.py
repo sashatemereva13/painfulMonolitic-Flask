@@ -178,7 +178,7 @@ def create_activity():
         "SELECT opt_out_tracking FROM users WHERE id = ?",
         (data["user_id"],)
     ).fetchone()
-    
+
     # block tracking if the user opted out
     if user and user["opt_out_tracking"] == 1:
         conn.close()
