@@ -37,7 +37,7 @@ def seed():
         ("Hades",                      "Roguelite",    "Defy the god of the dead.",                     ts(1)),
         ("Stardew Valley",             "Simulation",   "Build your farm. Build your life.",             ts(1)),
         ("Dead Cells",                 "Roguelite",    "Die. Adapt. Grow stronger.",                    ts(1)),
-        ("Ori and the Blind Forest",   "Platformer",   "A breathtaking forest journey.",                ts(1)),
+        ("Ori and the Blind Forest",   "RPG",   "A breathtaking forest journey.",                ts(1)),
         ("Disco Elysium: The Final Cut",      "RPG",          "A detective RPG unlike any other.",             ts(1)),
         ("Outer Wilds",                "Adventure",    "Explore a solar system stuck in a time loop.",  ts(1)),
     ]

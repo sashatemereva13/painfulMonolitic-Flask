@@ -206,6 +206,49 @@ What happens if you try to delete an activity that has notifications attached to
 as was mentioned during the previous answer, notifications reference activities, so activities can't be deleted before notifications.
 what happens if we call for our rebelious nature and try anyways?
 
+after some trial and error, 
+```
+sqlite> DELETE FROM activities WHERE activity_id = 1;
+Parse error: no such column: activity_id
+  DELETE FROM activities WHERE activity_id = 1;
+                 error here ---^
+sqlite> DELETE FROM activities WHERE user_id = 1;
+sqlite> PRAGMA foreign_keys;
+0
+sqlite> PRAGMA foreign_keys=on;
+sqlite> PRAGMA foreign_keys;
+1
+sqlite> SELECT activity_id, COUNT(*)
+   ...> FROM notifications
+   ...> GROUP BY activity_id;
+1|3
+2|3
+3|3
+4|2
+5|2
+6|2
+7|2
+8|2
+9|2
+10|2
+11|2
+12|2
+13|3
+14|3
+15|3
+sqlite> DELETE FROM activities WHERE id = 1;
+sqlite> 
+```
+
+i found out, that the FKs were off, and probably I deleted from activities before I turned on FKs, so that nothing prevented me, no errors. and 
+```
+sqlite> SELECT * FROM activities WHERE id = 1;
+sqlite> 
+```
+returns nothing.
+
+but i explored.
+
 
 ---
 
@@ -213,9 +256,19 @@ what happens if we call for our rebelious nature and try anyways?
 You fix it and restart the app to ship the change.
 What else just went down, and for how long?
 
+**Answer**: I changed Ori and the Blind Forest to an RPG.
+my app.py wasn't on while i was doing it, so i just deletd the old gamehub.db and then run 
+```
+python3 seed.py
+```
+and the db was recreated. i will try once again, but this time app.py will be on, so i'll see it lagging. and ofc, in this case, im getting an OperationalError. then i seed it, reload, and the page is back on track.
 
 ---
 
 **10.** A teammate says: _"let's just move the notification logic into its own function in `app.py`"_.
 Does that solve the problem described in Task 4?
 What is the actual architectural issue?
+
+**Answer**: it's tempting to hope a simple move solves everything, but won't work
+the issue with monolithic architecture is that functoins like POST /activities do too many things at once - all those things must be logically separated. if we just some functions around, chances are - the app wont work. or it will, but the architecture won't be improved.
+The deeper issue is that the app mixes routing, business logic, and persistence logic in one place.
